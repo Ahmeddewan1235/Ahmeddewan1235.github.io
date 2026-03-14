@@ -444,7 +444,7 @@
         <h2 class="section-title fade-in">Skills & Tools</h2>
 
 
-        <div class="skills-grid">                           //grid control for skill tags
+        <div class="skills-grid">                          <!-- grid control for skill tags --> 
             <div class="skill-card fade-in">
                 <h3>IT Support</h3>
                 <div class="skill-tags">
@@ -457,7 +457,7 @@
             </div>
 
 
-            <div class="skill-card fade-in">                //skill card for development skills
+            <div class="skill-card fade-in">               <!-- skill card for development skills --> 
                 <h3>Development</h3>                `   
                 <div class="skill-tags">
                     <span class="tag">JavaScript</span>
@@ -470,7 +470,7 @@
             </div>
 
 
-            <div class="skill-card fade-in">                //skill card for cloud and database skills
+            <div class="skill-card fade-in">                <!-- Sskill card for cloud and database skills -->
                 <h3>Cloud & Databases</h3>
                 <div class="skill-tags">
                     <span class="tag">AWS Lambda</span>
@@ -481,29 +481,66 @@
             </div>
 
 
-            <div class="skill-card fade-in">            //skill card for systems and networking skills
-                <h3>Systems & Networking</h3>
-                <div class="skill-tags">
-                    <span class="tag">Windows 10/11</span>
-                    <span class="tag">Linux</span>
-                    <span class="tag">DNS</span>
-                    <span class="tag">DHCP</span>
-                    <span class="tag">TCP/IP</span>
-                    <span class="tag">VMware</span>
-                </div>
+            <div class="skill-card fade-in">            <!-- skill card for systems and networking skills -->
+!-- PROJECTS -->
+    <section id="projects">
+        <p class="section-label fade-in">What I've built</p>
+        <h2 class="section-title fade-in">Projects</h2>
+        <div class="projects-grid">
+            <div class="project-card fade-in">
+                <h3>IT Helpdesk Ticketing System</h3>
+                <p>A full helpdesk triage system with a chatbot that collects issue details, 
+                    suggests fixes, and logs tickets with status tracking — 
+                    built to demonstrate ITIL principles.</p>
+                <span class="project-status">In Progress</span>
+            </div>
+            <div class="project-card fade-in">
+                <h3>Solar Sense</h3>
+                <p>Web-based solar panel quotation calculator built for a real client. 
+                    PHP, MySQL, WordPress with secure installer dashboard and role-based access control.</p>
+                <span class="project-status">Completed</span>
+            </div>
+            <div class="project-card fade-in">
+                <h3>Grey Box 3D Game</h3>
+                <p>Physics-based 3D browser game built in Unity with C# and deployed to itch.io via WebGL. 
+                    Optimised for low-poly performance with custom collision detection.</p>
+                <span class="project-status">Completed</span>
             </div>
         </div>
     </section>
-
-
-<section id="Projects"> 
-    <h2>Projects</h2>
-</section>
-
-<section id="contact">  
-    <h2>Contact</h2>
- </section>
-
-
+ 
+    <!-- CONTACT -->
+    <section id="contact">
+        <p class="section-label fade-in">Let's talk</p>
+        <h2 class="section-title fade-in">Get in Touch</h2>
+        <div class="contact-box fade-in">
+            <p>I'm actively looking for IT Support, Service Desk, or Junior Developer roles in Melbourne. Feel free to reach out.</p>
+            <div class="contact-links">
+                <a href="mailto:ahmeddewan1235@gmail.com" class="btn-primary">Email Me</a>
+                <a href="https://linkedin.com/in/ahmeddewan41" target="_blank" class="btn-secondary">LinkedIn</a>
+            </div>
+        </div>
+    </section>
+ 
+    <!-- CHATBOT BUTTON -->
+    <button class="chatbot-btn" title="Report an IT Issue">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 2C6.48 2 2 6.48 2 12c0 1.85.5 3.58 1.37 5.07L2 22l4.93-1.37C8.42 21.5 10.15 22 12 22c5.52 0 10-4.48 10-10S17.52 2 12 2zm-1 14H9v-2h2v2zm0-4H9V7h2v5zm4 4h-2v-2h2v2zm0-4h-2V7h2v5z"/>
+        </svg>
+    </button>
+ 
+    <script>
+        // Scroll animation
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.1 });
+ 
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+ 
 </body>
 </html>
