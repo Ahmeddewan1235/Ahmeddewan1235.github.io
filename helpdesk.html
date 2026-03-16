@@ -2,9 +2,962 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IT Helpdesk | Ahmed Dewan</title>
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        :root {
+            --teal: #0d9488;
+            --teal-light: #99f6e4;
+            --teal-dark: #0f766e;
+            --navy: #0f172a;
+            --grey: #64748b;
+            --light: #f8fafc;
+            --white: #ffffff;
+            --border: #e2e8f0;
+        }
+
+        html { scroll-behavior: smooth; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--light);
+            color: var(--navy);
+            overflow-x: hidden;
+        }
+
+        /* NAV */
+        nav {
+            position: fixed;
+            top: 0; width: 100%;
+            background: rgba(248, 250, 252, 0.85);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 1000;
+            padding: 0 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 64px;
+        }
+
+        .nav-logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 1.2rem;
+            color: var(--teal);
+            text-decoration: none;
+        }
+
+        .nav-back {
+            display: flex;
+            align-items: center;
+            gap: 0.4rem;
+            font-size: 0.88rem;
+            color: var(--grey);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s ease;
+        }
+
+        .nav-back:hover { color: var(--teal); }
+
+        /* HERO */
+        .hero {
+            padding: 8rem 2rem 4rem;
+            max-width: 1100px;
+            margin: 0 auto;
+            text-align: center;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeUp 0.8s ease forwards 0.2s;
+        }
+
+        .hero-tag {
+            display: inline-block;
+            background: var(--teal-light);
+            color: var(--teal-dark);
+            font-size: 0.8rem;
+            font-weight: 600;
+            padding: 0.3rem 0.9rem;
+            border-radius: 999px;
+            margin-bottom: 1.5rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+        }
+
+        .hero h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(2rem, 5vw, 3.5rem);
+            font-weight: 800;
+            letter-spacing: -2px;
+            color: var(--navy);
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 span { color: var(--teal); }
+
+        .hero p {
+            font-size: 1.05rem;
+            color: var(--grey);
+            max-width: 580px;
+            margin: 0 auto;
+            line-height: 1.7;
+        }
+
+        /* SECTIONS */
+        .section {
+            padding: 5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .section-label {
+            font-size: 0.78rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--teal);
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(1.5rem, 3vw, 2.2rem);
+            font-weight: 700;
+            letter-spacing: -1px;
+            color: var(--navy);
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+
+        /* LIFECYCLE */
+        .lifecycle-track {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0;
+            flex-wrap: wrap;
+            row-gap: 1rem;
+        }
+
+        .step {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 1.5rem 2rem;
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            min-width: 140px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .step:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 32px rgba(13,148,136,0.1);
+        }
+
+        .step-dot {
+            width: 14px; height: 14px;
+            border-radius: 999px;
+        }
+
+        .step-dot.pending  { background: #f59e0b; }
+        .step-dot.inprocess { background: #3b82f6; }
+        .step-dot.resolved { background: #8b5cf6; }
+        .step-dot.closed   { background: #10b981; }
+
+        .step-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.88rem;
+            font-weight: 700;
+            color: var(--navy);
+        }
+
+        .step-desc {
+            font-size: 0.72rem;
+            color: var(--grey);
+            text-align: center;
+            max-width: 120px;
+        }
+
+        .step-arrow {
+            font-size: 1.2rem;
+            color: var(--teal);
+            padding: 0 0.5rem;
+            font-weight: bold;
+        }
+
+        /* FORM */
+        .form-wrapper {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .form-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.4rem;
+        }
+
+        .form-subtitle {
+            font-size: 0.88rem;
+            color: var(--grey);
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.4rem;
+            margin-bottom: 1rem;
+        }
+
+        .form-group label {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--navy);
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            padding: 0.7rem 1rem;
+            border: 1.5px solid var(--border);
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            color: var(--navy);
+            background: var(--light);
+            transition: border-color 0.2s ease;
+            outline: none;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus,
+        .form-group textarea:focus {
+            border-color: var(--teal);
+            background: var(--white);
+        }
+
+        .form-group textarea { resize: vertical; min-height: 100px; }
+
+        /* TROUBLESHOOT BOX */
+        .troubleshoot-box {
+            display: none;
+            background: #f0fdf9;
+            border: 1.5px solid var(--teal-light);
+            border-radius: 10px;
+            padding: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .troubleshoot-box.visible { display: block; }
+
+        .troubleshoot-box h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 700;
+            color: var(--teal-dark);
+            margin-bottom: 0.75rem;
+        }
+
+        .troubleshoot-box ul {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        .troubleshoot-box ul li {
+            font-size: 0.85rem;
+            color: var(--navy);
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5rem;
+        }
+
+        .troubleshoot-box ul li::before {
+            content: '→';
+            color: var(--teal);
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .troubleshoot-actions {
+            display: flex;
+            gap: 0.75rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn-worked {
+            background: var(--teal);
+            color: white;
+            border: none;
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s ease;
+        }
+
+        .btn-worked:hover { background: var(--teal-dark); }
+
+        .btn-notworked {
+            background: transparent;
+            color: var(--grey);
+            border: 1.5px solid var(--border);
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: border-color 0.2s ease, color 0.2s ease;
+        }
+
+        .btn-notworked:hover { border-color: var(--navy); color: var(--navy); }
+
+        .btn-submit {
+            width: 100%;
+            background: var(--teal);
+            color: white;
+            border: none;
+            padding: 0.85rem;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+            margin-top: 0.5rem;
+        }
+
+        .btn-submit:hover { background: var(--teal-dark); transform: translateY(-2px); }
+        .btn-submit:disabled { background: var(--grey); cursor: not-allowed; transform: none; }
+
+        /* SUCCESS */
+        .success-box {
+            display: none;
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .success-box.visible { display: block; }
+
+        .success-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .success-box h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+
+        .ticket-id-display {
+            display: inline-block;
+            background: var(--teal-light);
+            color: var(--teal-dark);
+            font-family: monospace;
+            font-size: 1rem;
+            font-weight: 700;
+            padding: 0.5rem 1.25rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            letter-spacing: 1px;
+        }
+
+        .success-box p { color: var(--grey); font-size: 0.9rem; margin-bottom: 1.5rem; }
+
+        .btn-new {
+            background: transparent;
+            color: var(--teal);
+            border: 1.5px solid var(--teal);
+            padding: 0.6rem 1.5rem;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: background 0.2s ease, color 0.2s ease;
+        }
+
+        .btn-new:hover { background: var(--teal); color: white; }
+
+        /* DASHBOARD */
+        .dashboard-section {
+            padding: 5rem 2rem;
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .filter-tabs {
+            display: flex;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .filter-tab {
+            padding: 0.4rem 1rem;
+            border-radius: 999px;
+            border: 1.5px solid var(--border);
+            background: var(--white);
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--grey);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .filter-tab.active, .filter-tab:hover {
+            background: var(--teal);
+            color: white;
+            border-color: var(--teal);
+        }
+
+        .tickets-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.25rem;
+        }
+
+        .ticket-card {
+            background: var(--white);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .ticket-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(13,148,136,0.08);
+        }
+
+        .ticket-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 0.75rem;
+        }
+
+        .ticket-id {
+            font-family: monospace;
+            font-size: 0.72rem;
+            color: var(--grey);
+            font-weight: 600;
+        }
+
+        .status-badge {
+            font-size: 0.68rem;
+            font-weight: 700;
+            padding: 0.2rem 0.65rem;
+            border-radius: 999px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-badge.pending   { background: #fef3c7; color: #92400e; }
+        .status-badge.inprocess { background: #dbeafe; color: #1e40af; }
+        .status-badge.resolved  { background: #ede9fe; color: #5b21b6; }
+        .status-badge.closed    { background: #d1fae5; color: #065f46; }
+
+        .ticket-name {
+            font-family: 'Syne', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: var(--navy);
+            margin-bottom: 0.3rem;
+        }
+
+        .ticket-issue {
+            font-size: 0.8rem;
+            color: var(--teal-dark);
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+        }
+
+        .ticket-desc {
+            font-size: 0.82rem;
+            color: var(--grey);
+            line-height: 1.5;
+            margin-bottom: 1rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .ticket-footer {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.72rem;
+            color: var(--grey);
+        }
+
+        .ticket-time { display: flex; align-items: center; gap: 0.3rem; }
+
+        .empty-state {
+            text-align: center;
+            padding: 4rem 2rem;
+            color: var(--grey);
+            grid-column: 1 / -1;
+        }
+
+        .empty-state p { font-size: 0.95rem; margin-top: 0.5rem; }
+
+        .loading-state {
+            text-align: center;
+            padding: 3rem;
+            color: var(--grey);
+            grid-column: 1 / -1;
+            font-size: 0.9rem;
+        }
+
+        /* ANIMATIONS */
+        @keyframes fadeUp { to { opacity: 1; transform: translateY(0); } }
+
+        .fade-in {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+        }
+
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 640px) {
+            .form-row { grid-template-columns: 1fr; }
+            .lifecycle-track { flex-direction: column; }
+            .step-arrow { transform: rotate(90deg); }
+        }
+    </style>
 </head>
 <body>
-    <h1>Helpdesk Coming Soon</h1>
+
+    <!-- NAV -->
+    <nav>
+        <a href="index.html" class="nav-logo">AD.</a>
+        <a href="index.html" class="nav-back">← Back to Portfolio</a>
+    </nav>
+
+    <!-- HERO -->
+    <div class="hero">
+        <span class="hero-tag">ITIL-Aligned · Live Demo</span>
+        <h1>IT <span>Helpdesk</span> System</h1>
+        <p>Submit an IT issue below. The system will suggest troubleshooting steps — and if unresolved, generate a live ticket tracked on the dashboard.</p>
+    </div>
+
+    <!-- LIFECYCLE -->
+    <div class="section fade-in">
+        <p class="section-label">How it works</p>
+        <h2 class="section-title">Ticket Lifecycle</h2>
+        <div class="lifecycle-track">
+            <div class="step">
+                <div class="step-dot pending"></div>
+                <span class="step-name">Pending</span>
+                <span class="step-desc">Ticket submitted, awaiting review</span>
+            </div>
+            <span class="step-arrow">→</span>
+            <div class="step">
+                <div class="step-dot inprocess"></div>
+                <span class="step-name">In Process</span>
+                <span class="step-desc">Issue being actively worked on</span>
+            </div>
+            <span class="step-arrow">→</span>
+            <div class="step">
+                <div class="step-dot resolved"></div>
+                <span class="step-name">Resolved</span>
+                <span class="step-desc">Fix applied, awaiting confirmation</span>
+            </div>
+            <span class="step-arrow">→</span>
+            <div class="step">
+                <div class="step-dot closed"></div>
+                <span class="step-name">Closed</span>
+                <span class="step-desc">Client confirmed resolution</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- TICKET FORM -->
+    <div class="section fade-in" id="submit">
+        <p class="section-label">Report an issue</p>
+        <h2 class="section-title">Submit a Ticket</h2>
+
+        <div class="form-wrapper">
+
+            <!-- SUCCESS STATE -->
+            <div class="success-box" id="successBox">
+                <div class="success-icon">✅</div>
+                <h3>Ticket Created!</h3>
+                <div class="ticket-id-display" id="ticketIdDisplay"></div>
+                <p>Your ticket has been logged and will appear on the dashboard below. Screenshot your ticket ID for reference.</p>
+                <button class="btn-new" onclick="resetForm()">Submit Another Issue</button>
+            </div>
+
+            <!-- FORM -->
+            <div id="formContent">
+                <h3 class="form-title">Tell us about your issue</h3>
+                <p class="form-subtitle">We'll suggest a fix first — if it doesn't work, we'll log a ticket.</p>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label>Full Name *</label>
+                        <input type="text" id="userName" placeholder="Ahmed Dewan" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Email *</label>
+                        <input type="email" id="userEmail" placeholder="you@email.com" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Issue Category *</label>
+                    <select id="issueCategory" onchange="showTroubleshoot()">
+                        <option value="">— Select a category —</option>
+                        <option value="wifi">WiFi / Network</option>
+                        <option value="email">Email / Outlook</option>
+                        <option value="hardware">Hardware / Device</option>
+                        <option value="software">Software / Application</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+
+                <!-- TROUBLESHOOT BOX -->
+                <div class="troubleshoot-box" id="troubleshootBox">
+                    <h4 id="troubleshootTitle">Try these steps first:</h4>
+                    <ul id="troubleshootList"></ul>
+                    <div class="troubleshoot-actions">
+                        <button class="btn-worked" onclick="issueFixed()">✓ That worked!</button>
+                        <button class="btn-notworked" onclick="showFullForm()">✗ Still not working</button>
+                    </div>
+                </div>
+
+                <!-- FULL FORM (shown after troubleshoot fails) -->
+                <div id="fullFormFields" style="display:none;">
+                    <div class="form-group">
+                        <label>Issue Description *</label>
+                        <textarea id="issueDesc" placeholder="Describe what's happening in detail..."></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label>Department</label>
+                        <select id="userDept">
+                            <option value="General">General</option>
+                            <option value="Finance">Finance</option>
+                            <option value="HR">HR</option>
+                            <option value="IT">IT</option>
+                            <option value="Operations">Operations</option>
+                            <option value="Sales">Sales</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Priority</label>
+                        <select id="issuePriority">
+                            <option value="Low">Low</option>
+                            <option value="Medium" selected>Medium</option>
+                            <option value="High">High</option>
+                            <option value="Critical">Critical</option>
+                        </select>
+                    </div>
+                    <button class="btn-submit" id="submitBtn" onclick="submitTicket()">Generate Ticket</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- DASHBOARD -->
+    <div class="dashboard-section fade-in">
+        <div class="dashboard-header">
+            <div>
+                <p class="section-label" style="text-align:left;">Live tickets</p>
+                <h2 class="section-title" style="text-align:left; margin-bottom:0;">Ticket Dashboard</h2>
+            </div>
+            <div class="filter-tabs">
+                <button class="filter-tab active" onclick="filterTickets('all', this)">All</button>
+                <button class="filter-tab" onclick="filterTickets('pending', this)">Pending</button>
+                <button class="filter-tab" onclick="filterTickets('inprocess', this)">In Process</button>
+                <button class="filter-tab" onclick="filterTickets('resolved', this)">Resolved</button>
+                <button class="filter-tab" onclick="filterTickets('closed', this)">Closed</button>
+            </div>
+        </div>
+        <div class="tickets-grid" id="ticketsGrid">
+            <div class="loading-state">Loading tickets...</div>
+        </div>
+    </div>
+
+    <!-- FIREBASE SDK -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
+        import { getFirestore, collection, addDoc, onSnapshot, query, orderBy, serverTimestamp }
+            from "https://www.gstatic.com/firebasejs/11.0.1/firebase-firestore.js";
+
+        // Firebase config
+        const firebaseConfig = {
+            apiKey: "AIzaSyDTaaMjO1z_QYdkykzeOEjQpUM8Sn4GcU8",
+            authDomain: "ahmed-helpdesk.firebaseapp.com",
+            projectId: "ahmed-helpdesk",
+            storageBucket: "ahmed-helpdesk.firebasestorage.app",
+            messagingSenderId: "1067169053496",
+            appId: "1:1067169053496:web:23223a2f83f0ad786adfcd"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // Troubleshoot tips per category
+        const troubleshootTips = {
+            wifi: {
+                title: "WiFi / Network — try these first:",
+                steps: [
+                    "Turn WiFi off and on again on your device",
+                    "Restart your router (unplug for 30 seconds)",
+                    "Forget the network and reconnect",
+                    "Check if other devices can connect to the same WiFi"
+                ]
+            },
+            email: {
+                title: "Email / Outlook — try these first:",
+                steps: [
+                    "Close and reopen Outlook completely",
+                    "Check your internet connection is working",
+                    "Clear the Outlook cache (File → Account Settings)",
+                    "Check if you can access webmail via browser"
+                ]
+            },
+            hardware: {
+                title: "Hardware / Device — try these first:",
+                steps: [
+                    "Restart the device completely",
+                    "Check all cables and connections are secure",
+                    "Try a different USB port or cable if applicable",
+                    "Check Device Manager for any error flags"
+                ]
+            },
+            software: {
+                title: "Software / Application — try these first:",
+                steps: [
+                    "Close and reopen the application",
+                    "Restart your computer",
+                    "Check if there are pending updates",
+                    "Try running the app as Administrator"
+                ]
+            },
+            other: {
+                title: "General troubleshoot steps:",
+                steps: [
+                    "Restart your device — this fixes 80% of issues",
+                    "Check if colleagues are experiencing the same issue",
+                    "Note any error messages or codes you see",
+                    "Try reproducing the issue to identify when it occurs"
+                ]
+            }
+        };
+
+        // Show troubleshoot tips
+        window.showTroubleshoot = function () {
+            const cat = document.getElementById('issueCategory').value;
+            if (!cat) return;
+            const tips = troubleshootTips[cat];
+            document.getElementById('troubleshootTitle').textContent = tips.title;
+            const list = document.getElementById('troubleshootList');
+            list.innerHTML = tips.steps.map(s => `<li>${s}</li>`).join('');
+            document.getElementById('troubleshootBox').classList.add('visible');
+            document.getElementById('fullFormFields').style.display = 'none';
+        };
+
+        window.showFullForm = function () {
+            document.getElementById('fullFormFields').style.display = 'block';
+            document.getElementById('fullFormFields').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        };
+
+        window.issueFixed = function () {
+            document.getElementById('troubleshootBox').classList.remove('visible');
+            document.getElementById('issueCategory').value = '';
+            alert('Great! Glad that worked. No ticket needed.');
+        };
+
+        // Generate ticket ID
+        function generateTicketId() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            let id = 'TKT-';
+            for (let i = 0; i < 6; i++) id += chars[Math.floor(Math.random() * chars.length)];
+            return id;
+        }
+
+        // Submit ticket to Firestore
+        window.submitTicket = async function () {
+            const name = document.getElementById('userName').value.trim();
+            const email = document.getElementById('userEmail').value.trim();
+            const category = document.getElementById('issueCategory').value;
+            const desc = document.getElementById('issueDesc').value.trim();
+            const dept = document.getElementById('userDept').value;
+            const priority = document.getElementById('issuePriority').value;
+
+            if (!name || !email || !category || !desc) {
+                alert('Please fill in all required fields.');
+                return;
+            }
+
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = true;
+            btn.textContent = 'Submitting...';
+
+            const ticketId = generateTicketId();
+
+            try {
+                await addDoc(collection(db, 'tickets'), {
+                    ticketId,
+                    name,
+                    email,
+                    category,
+                    description: desc,
+                    department: dept,
+                    priority,
+                    status: 'pending',
+                    createdAt: serverTimestamp()
+                });
+
+                document.getElementById('ticketIdDisplay').textContent = ticketId;
+                document.getElementById('formContent').style.display = 'none';
+                document.getElementById('successBox').classList.add('visible');
+
+            } catch (err) {
+                console.error(err);
+                alert('Something went wrong. Please try again.');
+                btn.disabled = false;
+                btn.textContent = 'Generate Ticket';
+            }
+        };
+
+        // Reset form
+        window.resetForm = function () {
+            document.getElementById('userName').value = '';
+            document.getElementById('userEmail').value = '';
+            document.getElementById('issueCategory').value = '';
+            document.getElementById('issueDesc').value = '';
+            document.getElementById('troubleshootBox').classList.remove('visible');
+            document.getElementById('fullFormFields').style.display = 'none';
+            document.getElementById('successBox').classList.remove('visible');
+            document.getElementById('formContent').style.display = 'block';
+            const btn = document.getElementById('submitBtn');
+            btn.disabled = false;
+            btn.textContent = 'Generate Ticket';
+        };
+
+        // Dashboard — live listener
+        let allTickets = [];
+        let activeFilter = 'all';
+
+        const q = query(collection(db, 'tickets'), orderBy('createdAt', 'desc'));
+
+        onSnapshot(q, (snapshot) => {
+            allTickets = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+            renderTickets();
+        });
+
+        window.filterTickets = function (status, btn) {
+            activeFilter = status;
+            document.querySelectorAll('.filter-tab').forEach(t => t.classList.remove('active'));
+            btn.classList.add('active');
+            renderTickets();
+        };
+
+        function renderTickets() {
+            const grid = document.getElementById('ticketsGrid');
+            const filtered = activeFilter === 'all'
+                ? allTickets
+                : allTickets.filter(t => t.status === activeFilter);
+
+            if (filtered.length === 0) {
+                grid.innerHTML = `
+                    <div class="empty-state">
+                        <div style="font-size:2.5rem">📭</div>
+                        <p>No tickets found${activeFilter !== 'all' ? ` with status "${activeFilter}"` : ''}.</p>
+                    </div>`;
+                return;
+            }
+
+            grid.innerHTML = filtered.map(t => {
+                const date = t.createdAt?.toDate
+                    ? t.createdAt.toDate().toLocaleDateString('en-AU', { day: 'numeric', month: 'short', year: 'numeric' })
+                    : 'Just now';
+
+                const statusLabel = {
+                    pending: 'Pending',
+                    inprocess: 'In Process',
+                    resolved: 'Resolved',
+                    closed: 'Closed'
+                }[t.status] || t.status;
+
+                const categoryLabel = {
+                    wifi: 'WiFi / Network',
+                    email: 'Email / Outlook',
+                    hardware: 'Hardware',
+                    software: 'Software',
+                    other: 'Other'
+                }[t.category] || t.category;
+
+                return `
+                    <div class="ticket-card">
+                        <div class="ticket-card-header">
+                            <span class="ticket-id">${t.ticketId}</span>
+                            <span class="status-badge ${t.status}">${statusLabel}</span>
+                        </div>
+                        <div class="ticket-name">${t.name}</div>
+                        <div class="ticket-issue">${categoryLabel} · ${t.priority || 'Medium'}</div>
+                        <div class="ticket-desc">${t.description}</div>
+                        <div class="ticket-footer">
+                            <span>${t.department || 'General'}</span>
+                            <span class="ticket-time">📅 ${date}</span>
+                        </div>
+                    </div>`;
+            }).join('');
+        }
+
+        // Scroll animations
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+        }, { threshold: 0.1 });
+
+        document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    </script>
+
 </body>
 </html>
