@@ -572,13 +572,13 @@
 </head>
 <body>
 
-    <!-- NAV -->
+    <!--navigation-->
     <nav>
         <a href="index.html" class="nav-logo">AD.</a>
         <a href="index.html" class="nav-back">← Back to Portfolio</a>
     </nav>
 
-    <!-- HERO -->
+    <!--Headinng-->
     <div class="hero">
         <span class="hero-tag">ITIL-Aligned · Live Demo</span>
         <h1>IT <span>Helpdesk</span> System</h1>
@@ -599,13 +599,13 @@
             <div class="step">
                 <div class="step-dot inprocess"></div>
                 <span class="step-name">In Process</span>
-                <span class="step-desc">Issue being actively worked on</span>
+                <span class="step-desc">Assigned to an agent, being addressed</span>
             </div>
             <span class="step-arrow">→</span>
             <div class="step">
                 <div class="step-dot resolved"></div>
                 <span class="step-name">Resolved</span>
-                <span class="step-desc">Fix applied, awaiting confirmation</span>
+                <span class="step-desc">Fix applied, awaiting Client confirmation</span>
             </div>
             <span class="step-arrow">→</span>
             <div class="step">
@@ -636,11 +636,12 @@
             <div id="formContent">
                 <h3 class="form-title">Tell us about your issue</h3>
                 <p class="form-subtitle">We'll suggest a fix first — if it doesn't work, we'll log a ticket.</p>
+                <p class="form-subtitle">(Note: As this is a demo, You are not required to use real information)</p>
 
                 <div class="form-row">
                     <div class="form-group">
                         <label>Full Name *</label>
-                        <input type="text" id="userName" placeholder="Ahmed Dewan" required>
+                        <input type="text" id="userName" placeholder="First & Last Name" required>
                     </div>
                     <div class="form-group">
                         <label>Email *</label>
@@ -653,8 +654,8 @@
                     <select id="issueCategory" onchange="showTroubleshoot()">
                         <option value="">— Select a category —</option>
                         <option value="wifi">WiFi / Network</option>
-                        <option value="email">Email / Outlook</option>
-                        <option value="hardware">Hardware / Device</option>
+                        <option value="email">Email / Outlook / Gmail</option>
+                        <option value="hardware">Hardware / Device issue</option>
                         <option value="software">Software / Application</option>
                         <option value="other">Other</option>
                     </select>
